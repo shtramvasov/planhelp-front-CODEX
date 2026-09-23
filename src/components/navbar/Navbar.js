@@ -17,12 +17,12 @@ export function Navbar(props) {
     const location = useLocation();
     const User = useSelector((state) => state.user);
     const Chat = useSelector((state) => state.chat);
-    const audioUrl = 'https://planhelp.ru/api/download/3/2026_2_19_1177300_oh-oh-icq-sound.mp3';
-    const playAudio = () => {
-	    const audio = new Audio(audioUrl);
-        audio.volume = 0.1;
-        audio.play();
-    };
+    // const audioUrl = 'https://planhelp.ru/api/download/3/2026_2_19_1177300_oh-oh-icq-sound.mp3';
+    // const playAudio = () => {
+	  //   const audio = new Audio(audioUrl);
+    //     audio.volume = 0.1;
+    //     audio.play();
+    // };
     const isWindowActive = useWindowActive();
     const [countUnreadMessages, setCountUnreadMessages] = useState(0);
 
@@ -57,7 +57,7 @@ export function Navbar(props) {
         }
         if (countUnreadMessages) {
 	    if (!isWindowActive) {
-		    playAudio();
+		    // playAudio();
 	    }
             document.title = `${countUnreadMessages} сообщений в чатах | planhelp`;
         } else {

@@ -140,9 +140,10 @@ export const ChatMessageItem = memo(({
                 width: 'fit-content',
                 p: 1.35,
                 pb: isDiscussionChat ? 0.5 : 1.35,
-                background: isMyMessage 
-                  ? `linear-gradient(90deg, ${alpha(theme.palette.primary.light, 0.5)} 0%, ${alpha(theme.palette.primary.main, 0.3)} 100%)`
-                  : `linear-gradient(90deg, ${alpha(theme.palette.primary.light, 0.4)} 0%, ${alpha(theme.palette.primary.main, 0.2)} 100%)`,
+                background: theme.palette.info.light,
+                // background: isMyMessage 
+                //   ? `linear-gradient(90deg, ${alpha(theme.palette.primary.light, 0.5)} 0%, ${alpha(theme.palette.primary.main, 0.3)} 100%)`
+                //   : `linear-gradient(90deg, ${alpha(theme.palette.primary.light, 0.4)} 0%, ${alpha(theme.palette.primary.main, 0.2)} 100%)`,
                 borderRadius: 1.5,
                 borderTopLeftRadius: showMetadata && !isMyMessage ? 1 : 1.5,
                 borderTopRightRadius: showMetadata && isMyMessage ? 1 : 1.5,
@@ -208,7 +209,7 @@ export const ChatMessageItem = memo(({
                         <Chip 
                           size="small" 
                           label={message?.child_message_count || 0} 
-                          color="default"
+                          color={message?.extraVariant ? 'info' : 'default'}
                           sx={{ borderRadius: 1, p: 0, cursor: 'pointer' }}
                         />
                         <Typography 

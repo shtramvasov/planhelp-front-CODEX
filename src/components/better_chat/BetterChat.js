@@ -155,6 +155,24 @@ function BetterChat(props) {
 
   const messages = Chat.chatDialogMessageList[chat_id] || [];
 
+  const discussionMessage = () => {
+  if (!chat_id) {
+    return null
+  }
+
+  const [parentChatId, parentMessageId] = chat_id.split('_')
+
+  const messages = Chat.chatDialogMessageList[parentChatId]
+
+  if (!messages) {
+    return null
+  }
+
+  return messages.find(
+    message => String(message.message_id) === String(parentMessageId)
+  )
+}
+
 
   const preparedMessages = useMemo(() => {
     return messages.map((message, index) => ({
@@ -847,6 +865,29 @@ function BetterChat(props) {
               )}
               {/* Список сообщений */}
               {(chat_id && Chat.chatDialogMessageList[chat_id] && !isLoading) && (
+                <Box sx={{ position: 'relative' }}>
+                {discussionMessage()?.message_text && (
+                  <Grid
+                    sx={{
+                      position: 'static',
+                      top: -5,
+                      zIndex: 10,
+                      display: 'inline-flex',
+                      flexDirection: 'column',
+                      width: 'fit-content',
+                      p: 1.35,
+                      background: theme.palette.grey[200],
+                      borderRadius: 1.5,
+                      borderTopLeftRadius: 1.5,
+                      borderTopRightRadius: 1.5,
+                      gap: 1
+                    }}
+                  >
+                    <Typography sx={{ fontSize: 12, lineHeight: 1.6 }}>{discussionMessage()?.message_text}</Typography>
+                    <Typography sx={{ fontSize: 12, color: theme.palette.grey[500] }}>от: {discussionMessage()?.username || discussionMessage()?.login}</Typography>
+                  </Grid>
+                )}
+
                 <Grid sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
                   {preparedMessages.map(({ message, metadata }, index) => (
                     <ChatMessageItem
@@ -864,6 +905,7 @@ function BetterChat(props) {
                     />
                   ))}
                 </Grid>
+                </Box>
               )}
             </Grid> 
 
