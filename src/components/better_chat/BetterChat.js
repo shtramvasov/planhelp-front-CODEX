@@ -29,6 +29,7 @@ import ModalAutoComplete from "../helpers/ModalAutoComplete";
 import customEmojisData from './emojis.data.json';
 import { ChatDialogItem, ChatHeaderSkeleton, ChatMessageItem, ChatNotFoundSkeleton, CreateNewChatMenu, MessageContextMenu, OnlineUsersInChatMenu, TypingUsers, MentionUserListMenu } from "./components";
 import { actionChangeDiscussionSwitch, actionChangeNotifySwitch, actionDelUser, actionGetChatDialogList, actionGetChatDialogMessageList, actionLeaveChat, actionNewChatDialogName, actionSendChatTyping, actionSetChatDialogReadAll, copyTextToClipboard, fetchChatDialog, fetchUploadFile, handleDeleteChatMessage } from "./actions";
+import formatText from '../helpers/FormatText';
 moment.locale('ru');
 
 
@@ -869,22 +870,39 @@ function BetterChat(props) {
                 {discussionMessage()?.message_text && (
                   <Grid
                     sx={{
-                      position: 'static',
-                      top: -5,
+                      justifyContent: 'center',
                       zIndex: 10,
-                      display: 'inline-flex',
+                      display: 'flex',
+                      // margin: '0 auto',
                       flexDirection: 'column',
                       width: 'fit-content',
                       p: 1.35,
-                      background: theme.palette.grey[200],
+                      background: theme.palette.info.light,
                       borderRadius: 1.5,
                       borderTopLeftRadius: 1.5,
                       borderTopRightRadius: 1.5,
                       gap: 1
                     }}
                   >
-                    <Typography sx={{ fontSize: 12, lineHeight: 1.6 }}>{discussionMessage()?.message_text}</Typography>
-                    <Typography sx={{ fontSize: 12, color: theme.palette.grey[500] }}>от: {discussionMessage()?.username || discussionMessage()?.login}</Typography>
+                    <Typography sx={{ fontSize: 14, lineHeight: 1.6 }}>{formatText(discussionMessage()?.message_text)}</Typography>
+                    <Divider flexItem sx={{ bgcolor: theme.palette.grey[700],  }} />
+                    <Grid sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                      <Typography sx={{ fontSize: 12, pr: 0.3 }}>от: </Typography>
+                      <Avatar 
+                        src={discussionMessage()?.avatar_url} 
+                        sx={{ 
+                          width: 22, 
+                          height: 22, 
+                          fontSize: 9,
+                          fontWeight: 500,
+                          background: getUserGradient(theme, discussionMessage()?.user_id),
+                          '& img': { objectFit: 'cover', objectPosition: 'center'} 
+                        }}
+                      >
+                        {getShortChatName(discussionMessage()?.username || discussionMessage()?.login)}
+                      </Avatar>
+                      <Typography sx={{ fontSize: 12, color: theme.palette.primary.dark, fontWeight: 600 }}>{discussionMessage()?.username || discussionMessage()?.login}</Typography>
+                    </Grid>
                   </Grid>
                 )}
 
