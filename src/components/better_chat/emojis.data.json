@@ -244,6 +244,11 @@
       "id": "https://planhelp.ru/api/download/3/2026_4_19_135716408_41.webp",
       "names": ["plahelp"],
       "imgUrl": "https://planhelp.ru/api/download/3/2026_4_19_135716408_41.webp"
+    },
+    {
+      "id": "https://planhelp.ru/api/download/3/2026_8_26_21422932_123.png",
+      "names": ["plahelp"],
+      "imgUrl": "https://planhelp.ru/api/download/3/2026_8_26_21422932_123.png"
     }
   ]
 }
