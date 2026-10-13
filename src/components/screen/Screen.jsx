@@ -65,13 +65,12 @@ function Screen() {
   const handleUploadFile = async () => {
     try {
       if(selectedFile) {
-        setUploadingFile(true)
+        // setUploadingFile(true)
 
-        uploadFile({ selectedFile }, async (err, response) => {
+        uploadFile({ file: selectedFile }, async (err, response) => {
             if (!err) {
-              const result = await response.json();
-              setClipboardLink(result.file)
-              setUploadingFile(false)
+              setClipboardLink(response.url)
+              // setUploadingFile(false)
               dispatch(addPositiveMessage('Файл загружен'));
                 
             } else {
