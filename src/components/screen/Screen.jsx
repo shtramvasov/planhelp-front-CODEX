@@ -7,6 +7,7 @@ import { Navbar }  from "../navbar/Navbar";
 import { addPositiveMessage, addNegativeMessage } from '../../reducers/App';
 
 import styles from './styles.module.css'
+import { uploadFile } from '../../network/DiskNetwork';
 
 const FS_HOST = 'https://cdn.ds24.ru/fs/'
 
@@ -61,27 +62,39 @@ function Screen() {
     if(eventType == 'change') event.target.value = ''
   };
 
-  const uploadFile = async () => {
+  const handleUploadFile = async () => {
     try {
       if(selectedFile) {
         setUploadingFile(true)
 
-        const response = await fetch(FS_HOST, {
-          method: 'POST',
-          body: selectedFile,
-          headers: {
-            'filename': encodeURI(selectedFile.name)
-          },
-        });
+        uploadFile({ selectedFile }, async (err, response) => {
+            if (!err) {
+              const result = await response.json();
+              setClipboardLink(result.file)
+              setUploadingFile(false)
+              dispatch(addPositiveMessage('Файл загружен'));
+                
+            } else {
+                dispatch(addNegativeMessage('Произошла ошибка'));
+            }
+        })      
 
-        if (!response.ok) {
-          throw new Error('Произошла ошибка');
-        }
+        // const response = await fetch(FS_HOST, {
+        //   method: 'POST',
+        //   body: selectedFile,
+        //   headers: {
+        //     'filename': encodeURI(selectedFile.name)
+        //   },
+        // });
 
-        const result = await response.json();
-        setClipboardLink(result.file)
-        setUploadingFile(false)
-        dispatch(addPositiveMessage('Файл загружен'));
+        // if (!response.ok) {
+        //   throw new Error('Произошла ошибка');
+        // }
+
+        // const result = await response.json();
+        // setClipboardLink(result.file)
+        // setUploadingFile(false)
+        // dispatch(addPositiveMessage('Файл загружен'));
       }
             
     } catch (error) {
@@ -173,7 +186,7 @@ function Screen() {
                           </span>
                           <p>{clipboardLink}</p>             
                         </div>
-                        <Button variant='contained' color='secondary' disabled={uploadingFile} onClick={uploadFile}>Загрузить</Button>
+                        <Button variant='contained' color='secondary' disabled={uploadingFile} onClick={handleUploadFile}>Загрузить</Button>
                       </div>
                     </div>
                   </>
