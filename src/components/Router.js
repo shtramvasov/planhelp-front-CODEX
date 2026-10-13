@@ -51,6 +51,8 @@ import Hr from "./hr/Hr";
 import Chat from "./chat/Chat";
 import BetterChat from "./better_chat/BetterChat";
 
+import Screen from "./screen/Screen";
+
 const router = createBrowserRouter([
     { path: "/", element: <Disk /> },
     { path: "/disk", element: <Disk /> },
@@ -95,6 +97,9 @@ const router = createBrowserRouter([
     // MUI Чат
     { path: "/better_chat", element: <BetterChat /> },
     { path: "/better_chat/:chat_id", element: <BetterChat /> },
+
+    // Скриншотилка
+    { path: "/screen", element: <Screen /> },
 ]);
 
 function Router() {

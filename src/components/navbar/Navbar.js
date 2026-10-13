@@ -158,6 +158,12 @@ export function Navbar(props) {
                 </Nav.Link>
                 </Nav.Item>
             </Nav>
+
+            <Nav className='justify-content-left'>
+                <Nav.Item>
+                <Nav.Link as={Link} to="/screen" active={location.pathname.includes("/screen")}>Скриншотилка</Nav.Link>
+                </Nav.Item>
+            </Nav>
             {/* <Nav className='justify-content-left'>
                 <Nav.Item>
                 <Nav.Link as={Link} to="/hr" active={location.pathname.includes("/hr")}>Люди</Nav.Link>
